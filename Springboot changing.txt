@@ -1,0 +1,15 @@
+Change 
+
+User controller : 
+第一句validation 改掉 ->add user 
+所有user 前面要加斜槓
+
+
+Movie Controller  : 
+Show newShow = new 那兩句刪掉
+
+Screen controller: 
+多加了get全部screens 的 method
+
+Show: 
+多加了一個constructor
