@@ -42,6 +42,8 @@
 <script>
 import NavBar from './NavBar.vue'
 import http from '../http-common.js'
+// new 
+import router from "../router/index"
 
 export default {
     name: "OrderList",
@@ -57,8 +59,14 @@ export default {
        
 
     },mounted(){
+        // new for trying session
+        if (sessionStorage.getItem("LoginUserID")==0){
+            alert("Please login to use this function");
+            router.push("/");
+        }
+
         http
-        .get("/reservation")
+        .get("/reservations")
         .then((response)=>{
             this.orders = response.data;
             console.log(this.orders);

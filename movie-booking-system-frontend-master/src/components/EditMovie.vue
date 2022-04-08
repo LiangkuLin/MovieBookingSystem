@@ -14,7 +14,7 @@
                 <th>Duration</th>
                 <th>Release Date</th>
                 <th>show time</th>
-                <th>Delete</th>
+                <th>Edit</th>
             </tr>
             </thead>
             <tbody  v-for="movie in movies" :key="movie.id">
@@ -27,7 +27,8 @@
                     <li class="showList" v-for="eachShow in movie.shows" :key="eachShow.message">Date:{{eachShow.date}},{{eachShow.startTime}}-{{eachShow.endTime}}</li>
                     </ol></td>
                 <td>
-                    <button type="submit" class="btn-detail" @click="DeleteMovie(movie.id)">Delete</button>
+                    <button type="button" class="btn-detail" @click="DeleteMovie(movie.id)">Delete</button>
+                    <button class="btn-detail" @click="AddShow(movie.id)">Add show</button>
                 </td>
             </tr>
             </tbody>
@@ -62,7 +63,15 @@ export default {
       
       alert("Delete Success");
         router.go(0);
+      },
+
+
+      // user click Add show button 
+      AddShow(id){
+        localStorage.setItem("thisMovie",id);
+        router.push("/addShow");
       }
+
       
     },mounted(){
         http
@@ -72,7 +81,7 @@ export default {
             console.log(this.movies);
         }).catch((e)=>{
             console.log(e.response.data);
-        }),
+        })
 
         // http
         // .get("/shows")

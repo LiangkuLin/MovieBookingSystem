@@ -98,6 +98,7 @@ export default {
             http.post("/movies",newMovie);
             alert("Movie has successfully created");
             router.push("/editMovie");
+          
             
         },
     },

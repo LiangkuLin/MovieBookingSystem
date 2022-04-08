@@ -16,8 +16,7 @@ export default {
         SearchBar,
         MovieList,
         NavBar
-    }
-    
+    },
 }
 </script>
 

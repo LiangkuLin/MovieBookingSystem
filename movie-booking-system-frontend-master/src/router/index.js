@@ -11,6 +11,7 @@ import LoginPage from "../components/LoginPage"
 import registerPage from "../components/RegisterPage"
 import EditMovie from "../components/EditMovie"
 import AddMovie from "../components/AddMovie"
+import AddShow from "../components/AddShow"
 
 
 const routes = [
@@ -69,6 +70,11 @@ const routes = [
         name: "Addmovie",
         component: AddMovie
     },
+    {
+        path: "/addShow",
+        name: "AddShow",
+        component: AddShow
+    }
 
 ];
 const router = createRouter({

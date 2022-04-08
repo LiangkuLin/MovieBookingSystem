@@ -46,6 +46,7 @@
 <script>
 import NavBar from './NavBar.vue';
 import http from "../http-common";
+import router from "../router/index"
 export default {
     name: "OrderDetail",
     components: {
@@ -72,6 +73,10 @@ export default {
                 if (userInput[0].value==this.userList[i].userName){
                     if (userInput[1].value==this.userList[i].userPassword){
                         alert("Success"); // this is for success loging
+                        // get user id here 
+                        sessionStorage.setItem("LoginUserID",this.userList[i].userId); // put user ID in session which can be used after 
+                        console.log("LoginUser Name: "+this.userList[i].userName+ ", ID: "+this.userList[i].userId);
+                        router.push("/");
                         return;
                     }
                 }
