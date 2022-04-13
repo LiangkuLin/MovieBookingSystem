@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Reservation;
+import com.example.demo.model.ReservationRepository;
 import com.example.demo.model.User;
 import com.example.demo.model.UserRepository;
 
@@ -30,6 +31,9 @@ public class UserController {
 
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	ReservationRepository resitoryRepository;
 
 	@GetMapping("/users")
 	public ResponseEntity<List<User>> getAllUsers(@RequestParam(required = false) String name) {
@@ -114,6 +118,24 @@ public class UserController {
 		}
 	}
 
+	
+	@PutMapping("/users/{id}/reservation/{rId}")
+	public ResponseEntity<User> editOneUser(@PathVariable long rId, @PathVariable("id") long id) {
+		Optional<User> userData = userRepository.findById(id);
+		Optional<Reservation> reservationData = resitoryRepository.findById(rId);
+		if (userData.isPresent() && reservationData.isPresent()) {
+			User _user = userData.get();
+
+			_user.deleteOneReservation(reservationData.get());
+
+			userRepository.save(_user);
+			return new ResponseEntity<User>(_user, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	
 	@DeleteMapping("/users/{id}")
 	public ResponseEntity<User> deleteOneUserById(@PathVariable("id") long id) {
 		try {

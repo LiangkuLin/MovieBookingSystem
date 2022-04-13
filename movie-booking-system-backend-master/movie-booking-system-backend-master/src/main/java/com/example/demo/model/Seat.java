@@ -42,6 +42,7 @@ public class Seat {
 	@OneToMany(mappedBy = "seat", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Ticket> tickets = new HashSet<>() ;
 
+	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "screen_id", nullable = true)
 	@JsonIgnore

@@ -85,7 +85,7 @@ public class DemoApplication {
 			
 			shows[2].addTicket(tickets[0]);
 			shows[2].addTicket(tickets[1]);
-			shows[2].addTicket(tickets[2]);
+			shows[2].addTicket(tickets[3]);
 
 			// add show to screen
 			screens[0].addShows(shows[0]);
@@ -103,11 +103,13 @@ public class DemoApplication {
 			cinemas[0].addScreen(screens[2]);
 			cinemas[1].addScreen(screens[3]);
 			cinemas[1].addScreen(screens[4]);
-
+			
 			// add movie into shows
 			movies[0].addShow(shows[0]);
 			movies[0].addShow(shows[1]);
 			movies[1].addShow(shows[2]);
+
+			
 
 			for (int i = 0; i < cinemas.length; i++) {
 				cinemaRepository.save(cinemas[i]);
@@ -124,6 +126,7 @@ public class DemoApplication {
 			for (int i = 0; i < shows.length; i++) {
 				showRepository.save(shows[i]);
 			}
+			
 
 			for (int i = 0; i < screens.length; i++) {
 				screenRepository.save(screens[i]);

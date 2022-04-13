@@ -74,8 +74,8 @@ export default {
                     if (userInput[1].value==this.userList[i].userPassword){
                         alert("Success"); // this is for success loging
                         // get user id here 
-                        sessionStorage.setItem("LoginUserID",this.userList[i].userId); // put user ID in session which can be used after 
-                        console.log("LoginUser Name: "+this.userList[i].userName+ ", ID: "+this.userList[i].userId);
+                        sessionStorage.setItem("LoginUserID",JSON.stringify(this.userList[i])); // put user ID in session which can be used after 
+                        console.log("StringJSON: " +JSON.stringify(this.userList[i]));
                         router.push("/");
                         return;
                     }

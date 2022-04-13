@@ -24,6 +24,7 @@
             <div class="userInput" >{{movieObj.title}}</div><br>
             screen: <br>
             <select  class="userInput" value="Select Screen here" @change="OnChangeScreen">
+                <option value="0"></option>
                 <option  v-for="screen in screens" :key="screen.message" v-bind:value="screen.id">{{screen.name}}</option>
             </select><br><br>
             <span class="warning">{{Warning}}</span><br>
@@ -71,6 +72,11 @@ export default{
     },
     methods:{
         AddShow(){
+
+            if (confirm("Are you sure all information for show is right? It can not be changed after added")==false){
+              return;
+            }
+
             var userInput=document.getElementsByClassName("userInput");
             //  Validation 
             // 1. check empty 
@@ -80,6 +86,10 @@ export default{
                    return;
                }
             }
+            if (this.selectedScreenId==0){
+               this.Warning="You should select a screen for this show";
+               return;
+            }
 
             // Make A new ShowObj And Input to database 
             let newShow={
@@ -87,12 +97,12 @@ export default{
                 startTime:userInput[1].value,
                 endTime:userInput[2].value
             };
-            console.log(newShow.date);
-            console.log(newShow.startTime);
-            console.log(newShow.endTime);
+            // console.log(newShow.date);
+            // console.log(newShow.startTime);
+            // console.log(newShow.endTime);
 
             this.showObj=newShow;
-            console.log("newShow"+this.showObj);
+            // console.log("newShow"+this.showObj);
 
             // Put the movieID into ShowController.tempMovieID
             // Put the ScreenID into ShowController.tempScreenID
@@ -110,16 +120,7 @@ export default{
           
             this.selectedScreenId=userInput[4].value*1;
             console.log(this.selectedScreenId);
-        },
-
-        sleep(milliseconds) {
-        const date = Date.now();
-        let currentDate = null;
-        do {
-        currentDate = Date.now();
-        } while (currentDate - date < milliseconds);
-}
-
+        }
     },
     mounted(){
         // Get movie by the id from edit movie

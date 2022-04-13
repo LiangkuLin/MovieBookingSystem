@@ -34,16 +34,18 @@ public class Show {
 	@Column(name = "endTime")
 	private String endTime;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = true)
+	// cancel:cascade = CascadeType.ALL
+	@ManyToOne( cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "movie_id", nullable = true)
 	@JsonIgnore
 	private Movie movie;
 
-
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = true)
+	//Cancel: cascade = CascadeType.ALL
+	@ManyToOne( fetch = FetchType.EAGER, optional = true)
 	@JoinColumn(name = "screen_id", nullable = true)
 	private Screen screen;
 
+	
 	@OneToMany(mappedBy = "show", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Ticket> tickets = new HashSet<>();
 

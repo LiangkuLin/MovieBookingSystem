@@ -43,8 +43,10 @@ public class Ticket {
 //	@JoinColumn(name = "seat_id", nullable = false)
 //	private Seat seat;
 
+	
+	// cancel: cascade = CascadeType.ALL
 	@JsonIgnore
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
+	@ManyToOne( fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "show_id", nullable = true)
 	private Show show;
 
@@ -53,9 +55,9 @@ public class Ticket {
 	@JoinColumn(name = "reservation_id", nullable = true)
 	private Reservation reservation;
 
-	
+	// cancel: cascade = CascadeType.ALL
 	@JsonIgnore
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
+	@ManyToOne( fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "seat_id", nullable = true)
 	private Seat seat;
 

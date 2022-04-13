@@ -37,8 +37,7 @@ public class Movie {
 	@Column(name = "releaseDate")
 	private Date releaseDate;
 	
-
-	@OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "movie", cascade = CascadeType.ALL ,fetch = FetchType.EAGER)
 	private Set<Show> shows = new HashSet<>();
 	
 

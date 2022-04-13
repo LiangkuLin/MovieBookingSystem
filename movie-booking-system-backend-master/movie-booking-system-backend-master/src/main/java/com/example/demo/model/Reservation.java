@@ -34,8 +34,9 @@ public class Reservation {
 	@Column(name = "numberOfTickets")
 	private int numberOfTickets = 0;
 
+	//cascade = CascadeType.ALL
 	@JsonIgnore
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "user_id", nullable = true)
 	private User user;
 

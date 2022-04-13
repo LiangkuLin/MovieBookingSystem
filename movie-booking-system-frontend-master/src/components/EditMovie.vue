@@ -78,7 +78,7 @@ export default {
         .get("/movies")
         .then((response)=>{
             this.movies = response.data;
-            console.log(this.movies);
+            // console.log(this.movies);
         }).catch((e)=>{
             console.log(e.response.data);
         })

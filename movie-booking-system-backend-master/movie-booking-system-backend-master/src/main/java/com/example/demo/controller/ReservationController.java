@@ -1,5 +1,8 @@
 package com.example.demo.controller;
 
+import java.awt.Image;
+import java.io.Console;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,8 +20,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.model.Movie;
 import com.example.demo.model.Reservation;
 import com.example.demo.model.ReservationRepository;
+import com.example.demo.model.Ticket;
+import com.example.demo.model.TicketRepository;
+import com.example.demo.model.User;
+import com.example.demo.model.UserRepository;
 
 @CrossOrigin(origins = "http://localhost:8081")
 @RequestMapping("/api")
@@ -27,6 +35,13 @@ public class ReservationController {
 
 	@Autowired
 	ReservationRepository reservationRepository;
+	
+	@Autowired
+	UserRepository userRepository;
+	
+	@Autowired
+	TicketRepository ticketRepository;
+	
 
 	@GetMapping("/reservations")
 	public ResponseEntity<List<Reservation>> getAllReservations(@RequestParam(required = false) String name) {
@@ -36,6 +51,62 @@ public class ReservationController {
 			return new ResponseEntity<List<Reservation>>(HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	// new 
+	/**
+	 *  Use passing user ID to get the user, compared the user with reservation 
+	 * to find the relative data
+	 * @param userId inputing user object in order to find relative reservation 
+	 * @return reservation list 
+	 */
+	@GetMapping("/reservations/{userId}")
+	public ResponseEntity<List<Reservation>> getSpecificReservations(@PathVariable("userId")long userId) {
+		
+		List<Reservation> reservationList= new ArrayList<Reservation>();
+		
+		Optional<User> specificUer= userRepository.findById(userId);
+		System.out.println("Specific User: "+specificUer.get().getUserId());
+		if (specificUer!=null) {
+			for (Reservation reservation:reservationRepository.findAll()) {
+				if (reservation.getUser()==specificUer.get()) {
+					reservationList.add(reservation);
+				} 
+			}
+			return new ResponseEntity<List<Reservation>>(reservationList,HttpStatus.OK);	
+		} else {
+			return new ResponseEntity<List<Reservation>>(HttpStatus.NOT_FOUND);	
+		}
+	}
+	
+	@GetMapping("/reservationsGetMovie/{reservationID}")
+	public ResponseEntity<List<String>> getMovieFromReservation(@PathVariable("reservationID")long id){
+//		List<Ticket>ticketList= new ArrayList<Ticket>();
+		List<String>movieTitleList= new ArrayList<String>();
+		for (Ticket ticket:ticketRepository.findAll()) {
+			if (ticket.getReservation().getReservationId()==id) {
+				movieTitleList.add(ticket.getShow().getMovie().getTitle()); 
+			}
+		}
+		System.out.println("Movie Title list: "+movieTitleList.toString());
+		return new ResponseEntity<List<String>>(movieTitleList,HttpStatus.OK);	
+	}
+	
+	
+	@GetMapping("/reservationsGetScreen/{reservationID}")
+	public ResponseEntity<List<String>> getScreenFromReservation(@PathVariable("reservationID")long id){
+//		List<Ticket>ticketList= new ArrayList<Ticket>();
+		List<String>ScreenList= new ArrayList<String>();
+		for (Ticket ticket:ticketRepository.findAll()) {
+			if (ticket.getReservation().getReservationId()==id) {
+				ScreenList.add(ticket.getShow().getScreen().getName()); 
+			}
+		}
+		System.out.println("Movie Title list: "+ScreenList.toString());
+		return new ResponseEntity<List<String>>(ScreenList,HttpStatus.OK);	
+	}
+	
+	
+	
 
 	@PostMapping("/reservations")
 	public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {

@@ -37,7 +37,7 @@ public class Screen {
 	private Cinema cinema;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "screen", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "screen", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Show> shows = new HashSet<>();
 
 	@OneToMany(mappedBy = "screen", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
